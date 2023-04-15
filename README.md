@@ -22,7 +22,6 @@ We can differentiate between ITD and ILD(IID), timing differences and level(inte
 ### Listener for steps
    - Right now we just start listening for steps after a volume threshhold is reached.
      - Can we build better filters for this?
- 
 
 
 ## Example for the sound of a step in both channels
