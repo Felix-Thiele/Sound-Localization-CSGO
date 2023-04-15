@@ -6,6 +6,7 @@ This project aims to detect the direction of incoming sound produced by footstep
 We can differentiate between ITD and ILD(IID), timing differences and level(intensity) differences in the two stereo 
  channels. Csgo seams to only use level differences...
 
+## Example of overlay showing detected direction
 <img src="https://github.com/Felix-Thiele/Sound-Localization-CSGO/blob/master/extra/csgoimage.JPG" width=100% height=100%>
 
 ## Contents and TODO
