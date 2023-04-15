@@ -150,6 +150,8 @@ def record_out(outfile=None,seconds=3):
 
 
 
+
+
 def record_mic(seconds=3, outfile=None):
 
     FRAMES_PER_BUFFER = 3200
