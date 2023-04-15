@@ -4,7 +4,7 @@ This project aims to detect the direction of incoming sound produced by footstep
 
 
 We can differentiate between ITD and ILD(IID), timing differences and level(intensity) differences in the two stereo 
- channels. Csgo seams to only use level differences...
+ channels. Csgo seems to only use level differences...
 
 Beware, stereo channels are not sufficient for localization. This code always guesses the 
 frontmost possible angle.
