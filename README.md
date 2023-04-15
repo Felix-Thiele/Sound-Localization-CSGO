@@ -6,8 +6,8 @@ This project aims to detect the direction of incoming sound produced by footstep
 We can differentiate between ITD and ILD(IID), timing differences and level(intensity) differences in the two stereo 
  channels. Csgo seams to only use level differences...
 
-<span style="color:red"> Beware, stereo channels are not suficccient for localization. This code always guesses the 
-frontmost possible angle.</span>
+Beware, stereo channels are not sufficient for localization. This code always guesses the 
+frontmost possible angle.
 
 ## Example of overlay showing detected direction
 <img src="https://github.com/Felix-Thiele/Sound-Localization-CSGO/blob/master/extra/csgoimage.JPG" width=100% height=100%>
@@ -30,6 +30,8 @@ frontmost possible angle.</span>
 ### Future?
  - Stereo sound is not sufficient to localize sounds. 
    - Can we calculate together mutlitple steps, and tracked mouse movements for more precise localisation?
+ - Related to the previous point, currently one can not rotate during the sound recording of a step. 
+Since this throws the sound all over the place. Again one should track mouse movement to fix this.
  - Can we also make distance predictions?
    - We might need to take into account some map details, as different surfaces make different step sounds...
 
