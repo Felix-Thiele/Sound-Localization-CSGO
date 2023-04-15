@@ -24,6 +24,12 @@ We can differentiate between ITD and ILD(IID), timing differences and level(inte
    - Right now we just start listening for steps after a volume threshhold is reached.
      - Can we build better filters for this?
 
+### Future?
+ - Stereo sound is not sufficient to localize sounds. 
+   - Can we calculate together mutlitple steps, and tracked mouse movements for more precise localisation?
+ - Can we also make distance predictions?
+   - We might need to take into account some map details, as different surfaces make different step sounds...
+
 
 ## Example for the sound of a step in both channels
 ![Alt text](extra/csgosound.jpg?raw=true)
