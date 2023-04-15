@@ -13,7 +13,7 @@ We can differentiate between ITD and ILD(IID), timing differences and level(inte
 ### Functions to record csgo sounds, and corresponding angles.
    - I used the map https://steamcommunity.com/sharedfiles/filedetails/?id=697998669&searchtext=sound to record sounds. 
 ### An Overlay to show steps 
-    - See the picture above.
+   - See the picture above.
 ### Code to calculate directions
    - There is a high correlation between the rotated degrees and the quotient of the mean values of both channels 
    (see Observation.ipynb). This seems to work pretty well in the isolated environment (e.g. the map mentioned above).
