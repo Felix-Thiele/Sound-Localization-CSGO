@@ -63,7 +63,7 @@ class LocatorThread(QtCore.QThread):
 
         CHANNELS = default_speakers["maxInputChannels"]
         RATE = int(default_speakers["defaultSampleRate"])
-        FRAMES_PER_BUFFER = pyaudio.get_sample_size(FORMAT)
+        FRAMES_PER_BUFFER = self.window.cal.FRAMES_PER_BUFFER#pyaudio.get_sample_size(FORMAT)
 
         stream = p.open(format=FORMAT,
                         channels=CHANNELS,
@@ -76,30 +76,23 @@ class LocatorThread(QtCore.QThread):
         # Listens for sounds above MIN_VOL and then records the next 400 sound inputs. These are the used to predict a direction
         # which is then shown in the overlay.
 
-        frames = []
         heard_step = False
         hear_ago = 0
-        heard = [[], []]
 
         while True:
             data = stream.read(FRAMES_PER_BUFFER)
-            frames.append(data)
-            ch1 = audio_tools.step_filter(np.frombuffer(data, dtype=np.int16)[1::2])
-            ch2 = audio_tools.step_filter(np.frombuffer(data, dtype=np.int16)[0::2])
+            ch1, ch2 = audio_tools.step_filter(self.window.cal, np.frombuffer(data, dtype=np.int16)[1::2], np.frombuffer(data, dtype=np.int16)[0::2])
+
             if heard_step:
                 if hear_ago == 200:
-                    angle = reg.predict([[(np.mean(np.abs(ch1)) - np.mean(np.abs(ch2))) / (
-                                np.mean(np.abs(ch1)) + np.mean(np.abs(ch2)))]])[0][0]
-                    # angle = np.arcsin((np.mean(np.abs(ch1)) - np.mean(np.abs(ch2))) / (np.mean(np.abs(ch1)) + np.mean(np.abs(ch2))))
-                    #self.window.show_step(angle * 180 / np.pi)
-                    self.show_angle_trigger.emit(angle * 180 / np.pi)
+                    if (np.mean(np.abs(ch1)) + np.mean(np.abs(ch2))>0):
+                        angle = reg.predict([[(np.mean(np.abs(ch1)) - np.mean(np.abs(ch2))) / (
+                                    np.mean(np.abs(ch1)) + np.mean(np.abs(ch2)))]])[0][0]
+                        # angle = np.arcsin((np.mean(np.abs(ch1)) - np.mean(np.abs(ch2))) / (np.mean(np.abs(ch1)) + np.mean(np.abs(ch2))))
+                        self.show_angle_trigger.emit(angle * 180 / np.pi)
                 if hear_ago > self.window.cal.START_LISTENING_AGAIN:
                     heard_step = False
                     hear_ago = 0
-                    heard = [[], []]
-
-                heard[0] += list(ch1)
-                heard[1] += list(ch2)
                 hear_ago += 1
             elif np.max(np.abs(ch1)) > self.window.cal.MIN_VOL or np.max(np.abs(ch2)) > self.window.cal.MIN_VOL:
                 heard_step = True

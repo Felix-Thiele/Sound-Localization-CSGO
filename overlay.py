@@ -65,7 +65,7 @@ class StepWindow(QMainWindow):
             QtCore.Qt.FramelessWindowHint |
             QtCore.Qt.X11BypassWindowManagerHint
         )
-        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
         self.setGeometry(self.cal.SCREEN_LEFT, self.cal.SCREEN_TOP, self.cal.SCREEN_WIDTH, self.cal.SCREEN_HEIGHT)
         self.size = min(self.cal.SCREEN_WIDTH, self.cal.SCREEN_HEIGHT)
         self.show_steps()
@@ -81,7 +81,6 @@ class StepWindow(QMainWindow):
 
     @QtCore.pyqtSlot(float)
     def show_step(self, angle):
-        print(angle)
         hor = self.cal.SCREEN_LEFT + (self.cal.SCREEN_WIDTH-self.size) * (0.5 + angle / (self.cal.ANGLE_RANGE * 2))
         hor = max(hor, self.cal.SCREEN_LEFT)
         hor = min(hor, self.cal.SCREEN_WIDTH + self.cal.SCREEN_LEFT)

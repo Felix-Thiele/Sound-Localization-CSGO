@@ -9,9 +9,6 @@ from audio_tools import record_samples, calibrate_mouse
 
 @dataclass
 class Calibration:
-    MIN_VOL = 200  # volume threshhold at which recording of a step starts.
-    START_LISTENING_AGAIN = 2000 # time after which start listening for new steps after an old step.
-    STEP_SHOW_TIME = 2000
 
     SCREEN_WIDTH = 3800
     SCREEN_LEFT = 10
@@ -19,6 +16,12 @@ class Calibration:
     SCREEN_TOP = 1500
 
     ANGLE_RANGE = 90 # range of angles that can be seen on screen, if out of range just shows step at the edge.
+
+    MIN_VOL = 200  # volume threshhold at which recording of a step starts.
+    START_LISTENING_AGAIN = 2000 # time after which start listening for new steps after an old step.
+    FRAMES_PER_BUFFER = 4
+    CUTOFF_AMP = 10
+
 
 cal = Calibration
 overlay.calibrate(cal)

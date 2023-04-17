@@ -22,8 +22,8 @@ frontmost possible angle.
    (see Observation.ipynb).
  - When there are multiple sounds overlapping, this does not yet work. 
    - Problematic on maps with backround noises.
-     - Currently I am using a band-pass filter, better noise cancelation algorithms would be usefull here.
-     - Also we could use a better filter to detect step sounds, than the basic threshold algorithm used.
+     - Currently I am using band-pass and threshold filtera, better noise cancelation algorithms or filters would be usefull here.
+     - Also we could use a better filter to detect step sounds, than the basic threshold algorithm used to determine when to start listeing.
    - Problematic when there are many steps.
      - Steps that already have been detected are not kept in mind, when calculating directions of new steps. This makes 
      the algorithm a bit hit or miss when there are many steps.

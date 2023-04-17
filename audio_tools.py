@@ -7,16 +7,27 @@ import win32api
 import time
 
 
-def step_filter(adata: np.ndarray, bandlimit: int =2000, sampling_rate: int = 44100) -> np.ndarray:
+def step_filter(cal, data1: np.ndarray, data2: np.ndarray, bandlimit: int =2000, sampling_rate: int = 44100) -> np.ndarray:
+    bandlimit_index = int(bandlimit * data1.size / sampling_rate)
+    fsig1 = np.fft.fft(data1)
 
-    bandlimit_index = int(bandlimit * adata.size / sampling_rate)
-    fsig = np.fft.fft(adata)
+    bandlimit_index = int(bandlimit * data2.size / sampling_rate)
+    fsig2 = np.fft.fft(data2)
 
-    fsig[bandlimit_index + 1: len(fsig) - bandlimit_index] = 0
+    mask = np.abs(fsig1 - fsig2) <= 10
 
-    adata_filtered = np.fft.ifft(fsig)
+    fsig1[mask] = 0
+    fsig2[mask] = 0
 
-    return np.real(adata_filtered)
+    fsig1[bandlimit_index + 1: len(fsig1) - bandlimit_index] = 0
+    fsig2[bandlimit_index + 1: len(fsig2) - bandlimit_index] = 0
+
+    data1_filtered = np.fft.ifft(fsig1)
+    data2_filtered = np.fft.ifft(fsig2)
+
+    data1_filtered[np.abs(data1_filtered) < cal.CUTOFF_AMP] = 0
+
+    return np.real(data1_filtered), np.real(data2_filtered)
 
 def calibrate_mouse():
     # Use this function to calculate how much mouse movement 360 degree in csgo is
