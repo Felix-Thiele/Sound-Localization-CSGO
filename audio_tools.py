@@ -6,6 +6,18 @@ import numpy as np
 import win32api
 import time
 
+
+def step_filter(adata: np.ndarray, bandlimit: int =2000, sampling_rate: int = 44100) -> np.ndarray:
+
+    bandlimit_index = int(bandlimit * adata.size / sampling_rate)
+    fsig = np.fft.fft(adata)
+
+    fsig[bandlimit_index + 1: len(fsig) - bandlimit_index] = 0
+
+    adata_filtered = np.fft.ifft(fsig)
+
+    return np.real(adata_filtered)
+
 def calibrate_mouse():
     # Use this function to calculate how much mouse movement 360 degree in csgo is
     state_left = win32api.GetKeyState(0x01)  # Left button down = 0 or 1. Button up = -127 or -128
